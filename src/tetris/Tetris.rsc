@@ -109,11 +109,8 @@ Figure tetrominoFigure(int tetromino){
 	<blocks,nrR,nrC> = getCanconicalRep(tetromino);
 	Color getColor(int r, int c) = 
 		<r,c> in blocks ? blockColors[tetromino] : color("black");
-	elems = for (r <- [0..nrR]) {
-		append for (c <- [0..nrC]) {
-			append box(fillColor(getColor(r,c)));
-		}
-	}
+	elems = [[box(fillColor(getColor(r,c))) | c <- [0..nrC]] | r <- [0..nrR]];
+
 	hshrinks = toReal(nrC) / toReal(maxTetrominoWidth);
 	vshrinks = toReal(nrR) / toReal(maxTetrominoHeight);
 	as = toReal(maxTetrominoWidth) / toReal(maxTetrominoHeight);
@@ -210,11 +207,7 @@ public Figure tetris(){
 	Figure playFieldElem(int r,int c) = 
 		box(fillColor(Color (){ return getColor(getPF(state.screen,<r,c>)); }));
 		
-	playFieldElems = for(r <- rowIndexes(state.screen)){
-		append for(c <- colIndexes(state.screen)){
-			append playFieldElem(r,c);
-		}
-	}
+	playFieldElems = [[playFieldElem(r,c) | c <- colIndexes(state.screen)] | r <- rowIndexes(state.screen)];
 	playFieldAS = toReal(nrCols(state.screen)) / toReal(nrRows(state.screen));
 	playFieldFig =  grid(playFieldElems, aspectRatio(playFieldAS)
 						,timer(initTimer,handleTimer));
