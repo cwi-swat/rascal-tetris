@@ -75,7 +75,7 @@ void writeHighscores(Highscores highscores) {
 bool newHighScore(Highscores highscores,int score) = 
 	score >= highscores[nrHighscores-1].score;
 	
-bool highScoreOrd(HighScore l,HighScore r) = l.score >= r.score; 
+bool highScoreOrd(HighScore l,HighScore r) = l.score > r.score; 
 bool isValidName(str name) = name != "";
 Highscores addHighScore(Highscores s, HighScore n) {
 	 s = sort([n] + s, highScoreOrd);
