@@ -93,20 +93,17 @@ Color getColor(PlayFieldState s){
 	}
 }
 
-Maybe[Action] keyToAction(KeySym key){
-	switch(key){
-		case keyArrowDown()    : return just(normalAction(acDown()));
-		case keyArrowLeft()    : return just(spinAction(  acLeft()));
-		case keyArrowRight()   : return just(spinAction(  acRight()));
-		case keyPrintable("z") : return just(spinAction(  acRotateCCW()));
-		case keyArrowUp()      : return just(spinAction(  acRotateCW()));
-		case keyPrintable("x") : return just(spinAction(  acRotateCW()));
-		case keyPrintable("a") : return just(normalAction(acSwap()));
-		case keyEnter()        : return just(normalAction(acDrop()));
-		case keyPrintable(" ") : return just(normalAction(acDrop()));
-		default                : return nothing();
-	}
-}
+Maybe[Action] keyToAction(keyArrowDown()) = just(normalAction(acDown()));
+Maybe[Action] keyToAction(keyArrowLeft())    = just(spinAction(acLeft()));
+Maybe[Action] keyToAction(keyArrowRight())   = just(spinAction(acRight()));
+Maybe[Action] keyToAction(keyPrintable("z")) = just(spinAction(acRotateCCW()));
+Maybe[Action] keyToAction(keyArrowUp())      = just(spinAction(acRotateCW()));
+Maybe[Action] keyToAction(keyPrintable("x")) = just(spinAction(acRotateCW()));
+Maybe[Action] keyToAction(keyPrintable("a")) = just(normalAction(acSwap()));
+Maybe[Action] keyToAction(keyEnter())        = just(normalAction(acDrop()));
+Maybe[Action] keyToAction(keyPrintable(" ")) = just(normalAction(acDrop()));
+
+default Maybe[Action] keyToAction(KeySym _) = nothing();
 
 Figure tetrominoFigure(int tetromino){
 	<blocks,nrR,nrC> = getCanconicalRep(tetromino);
