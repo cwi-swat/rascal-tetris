@@ -10,10 +10,10 @@
 module tetris::PlayField
 
 import List;
+import vis::Figure;
 
 alias Coordinate = tuple[int row,int col];
 alias Coordinates = list[Coordinate];
-alias Color = int;
 
 data PlayFieldState 
    = empty()

@@ -180,7 +180,7 @@ public Figure tetris(){
 		} else if(dropped){   // allow a little time to move a tetromino after
 			dropped = false; // drop
 			justPerfomedAction = false;
-			return restart();
+			return TimerAction::restart(minSpinTime);
 		} else if(justPerfomedAction){
 			/* if an action was performed then the remaining time till
 			   gravity (down) should stay the same
@@ -191,19 +191,20 @@ public Figure tetris(){
 			justPerfomedAction = false;
 			switch(info) {
 				case stopped(timeElapsed) : 
-					return restart();
+					return TimerAction::restart(
+							max(minSpinTime,timeTillDrop(state) - timeElapsed));
 				case running(timeLeft) : {
 					if(timeLeft > minSpinTime){
 						return noChange();
 					} else {
-						return restart();
+						return TimerAction::restart(minSpinTime);
 					}
 				}
 				default:
-				    return noChange();
+				return noChange();
 			}
 		} else if(stopped(timeElapsed) := info){
-			return restart();
+			return TimerAction::restart(timeTillDrop(state)- timeElapsed);
 		} else {
 			return noChange();
 		}
